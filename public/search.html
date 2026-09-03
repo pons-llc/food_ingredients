@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>食品を検索 | 食品成分表示API</title>
+<meta name="description" content="食品成分表示APIのデータをキーワード検索し、成分値を確認できるツールです。">
+<style>
+  :root{
+    --bg:#faf9f6; --surface:#ffffff; --text:#1c1b19; --muted:#6b6a66;
+    --border:#e7e5e0; --accent:#8a5a2b; --accent-bg:#f3ead9; --code-bg:#f3f2ee;
+    --hover:#f3f2ee;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171613; --surface:#1f1e1a; --text:#eeece6; --muted:#a6a49c;
+      --border:#34322c; --accent:#e0a96d; --accent-bg:#2b2418; --code-bg:#26251f;
+      --hover:#26251f;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.6;
+  }
+  a{color:var(--accent)}
+  header.hero{padding:1.6rem 1.5rem 1.2rem; border-bottom:1px solid var(--border)}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 1.5rem}
+  header.hero .wrap{padding:0; display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:.5rem}
+  h1{font-size:1.3rem; margin:0}
+  header.hero a.back{font-size:.85rem; text-decoration:none; color:var(--muted)}
+  header.hero a.back:hover{color:var(--accent)}
+
+  main.wrap{padding:1.5rem 1.5rem 4rem}
+
+  .search-box{margin-bottom:1rem}
+  input[type="search"]{
+    width:100%; font-size:1.05rem; padding:.75rem 1rem; border-radius:10px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text);
+  }
+  input[type="search"]:focus{outline:2px solid var(--accent); outline-offset:1px}
+  .hint{color:var(--muted); font-size:.82rem; margin:.4rem 0 0}
+
+  .layout{display:grid; grid-template-columns:1fr; gap:1.5rem}
+  @media (min-width:880px){
+    .layout{grid-template-columns:340px 1fr; align-items:start}
+  }
+
+  .results{
+    border:1px solid var(--border); border-radius:10px; background:var(--surface);
+    max-height:70vh; overflow-y:auto;
+  }
+  @media (min-width:880px){ .results{max-height:calc(100vh - 220px); position:sticky; top:1.5rem} }
+  .results-status{padding:.6rem .9rem; color:var(--muted); font-size:.82rem; border-bottom:1px solid var(--border)}
+  ul.result-list{list-style:none; margin:0; padding:0}
+  ul.result-list li{border-bottom:1px solid var(--border)}
+  ul.result-list li:last-child{border-bottom:none}
+  ul.result-list button{
+    display:block; width:100%; text-align:left; background:none; border:none; color:inherit;
+    font:inherit; padding:.65rem .9rem; cursor:pointer;
+  }
+  ul.result-list button:hover, ul.result-list button:focus, ul.result-list button.active{background:var(--hover)}
+  ul.result-list button.active{border-left:3px solid var(--accent); padding-left:calc(.9rem - 3px)}
+  .r-name{display:block; font-size:.95rem}
+  .r-meta{display:block; margin-top:.2rem}
+  .r-badge{
+    display:inline-block; font-size:.72rem; color:var(--accent); background:var(--accent-bg);
+    border-radius:5px; padding:.05em .45em; margin-right:.4em;
+  }
+  .r-code{color:var(--muted); font-size:.78rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+  .empty, .placeholder{color:var(--muted); padding:1rem .9rem; font-size:.9rem}
+
+  .detail{border:1px solid var(--border); border-radius:10px; background:var(--surface); padding:1.4rem 1.5rem; min-height:200px}
+  .detail h2{font-size:1.25rem; margin:0 0 .2rem}
+  .detail .d-code{color:var(--muted); font-size:.85rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .detail .d-group{margin:.6rem 0 1.4rem}
+  .detail .d-group .r-badge{margin-right:.5em}
+  .remark{background:var(--code-bg); border-radius:8px; padding:.7rem .9rem; font-size:.85rem; color:var(--muted); margin-bottom:1.4rem}
+  .remark b{color:var(--text)}
+
+  section.cat{margin-bottom:1.8rem; scroll-margin-top:1rem}
+  section.cat h3{font-size:1rem; border-bottom:1px solid var(--border); padding-bottom:.4rem; margin:0 0 .2rem}
+  section.cat .src{color:var(--muted); font-size:.78rem; margin:0 0 .6rem}
+  table.nutri{width:100%; border-collapse:collapse; font-size:.9rem}
+  table.nutri th, table.nutri td{text-align:left; padding:.35rem .5rem; border-bottom:1px solid var(--border)}
+  table.nutri th{color:var(--muted); font-weight:600; font-size:.82rem}
+  table.nutri td.val{font-variant-numeric:tabular-nums; white-space:nowrap}
+  .footnotes{font-size:.78rem; color:var(--muted); margin-top:.4rem}
+
+  .loading{color:var(--muted); padding:1rem 0}
+  .error{color:#b3413a; padding:1rem 0}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>食品を検索</h1>
+    <a class="back" href="/">← ドキュメントトップへ</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="search-box">
+    <input type="search" id="q" placeholder="食品名で検索（例: じゃがいも、しょうゆ、りんご）" autocomplete="off">
+    <p class="hint" id="hint">読み込み中…</p>
+  </div>
+
+  <div class="layout">
+    <div class="results" id="results">
+      <div class="placeholder">キーワードを入力すると候補が表示されます。</div>
+    </div>
+    <div class="detail" id="detail">
+      <div class="placeholder">左の一覧から食品を選ぶと、成分データがここに表示されます。</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var INDEX_URL = '/index.json';
+  var META_URL = '/metadata.json';
+  var DATA_URL = function(code){ return '/data/' + code + '.json'; };
+  var MAX_RESULTS = 200;
+
+  var state = { index: null, meta: null, dataCache: {}, activeCode: null };
+
+  var qEl = document.getElementById('q');
+  var hintEl = document.getElementById('hint');
+  var resultsEl = document.getElementById('results');
+  var detailEl = document.getElementById('detail');
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  Promise.all([
+    fetch(INDEX_URL).then(function(r){ return r.json(); }),
+    fetch(META_URL).then(function(r){ return r.json(); })
+  ]).then(function(res){
+    state.index = res[0];
+    state.meta = res[1];
+    hintEl.textContent = '全' + state.index.length + '件のデータから検索できます。';
+    qEl.disabled = false;
+    qEl.focus();
+
+    var params = new URLSearchParams(location.search);
+    var code = params.get('code');
+    if (code) selectFood(code, false);
+  }).catch(function(err){
+    hintEl.textContent = 'データの読み込みに失敗しました。';
+    resultsEl.innerHTML = '<div class="error">index.json / metadata.json の取得に失敗しました: ' + esc(err.message) + '</div>';
+  });
+
+  var debounceTimer = null;
+  qEl.addEventListener('input', function(){
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runSearch, 120);
+  });
+
+  function runSearch(){
+    var q = qEl.value.trim();
+    if (!state.index) return;
+    if (!q){
+      resultsEl.innerHTML = '<div class="placeholder">キーワードを入力すると候補が表示されます。</div>';
+      return;
+    }
+    var qLower = q.toLowerCase();
+    var matches = state.index.filter(function(f){
+      return f.name.toLowerCase().indexOf(qLower) !== -1 ||
+             (f.group_name && f.group_name.toLowerCase().indexOf(qLower) !== -1);
+    });
+
+    if (matches.length === 0){
+      resultsEl.innerHTML = '<div class="empty">「' + esc(q) + '」に一致する食品が見つかりませんでした。</div>';
+      return;
+    }
+
+    var shown = matches.slice(0, MAX_RESULTS);
+    var html = '<div class="results-status">' + matches.length + '件ヒット' +
+      (matches.length > shown.length ? '（先頭' + shown.length + '件を表示）' : '') + '</div>';
+    html += '<ul class="result-list">';
+    shown.forEach(function(f){
+      html += '<li><button type="button" data-code="' + esc(f.code) + '"' +
+        (f.code === state.activeCode ? ' class="active"' : '') + '>' +
+        '<span class="r-name">' + esc(f.name) + '</span>' +
+        '<span class="r-meta"><span class="r-badge">' + esc(f.group_name) + '</span>' +
+        '<span class="r-code">' + esc(f.code) + '</span></span>' +
+        '</button></li>';
+    });
+    html += '</ul>';
+    resultsEl.innerHTML = html;
+
+    resultsEl.querySelectorAll('button[data-code]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selectFood(btn.getAttribute('data-code'), true);
+      });
+    });
+  }
+
+  function selectFood(code, updateUrl){
+    state.activeCode = code;
+    resultsEl.querySelectorAll('button[data-code]').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-code') === code);
+    });
+    if (updateUrl){
+      var url = new URL(location.href);
+      url.searchParams.set('code', code);
+      history.pushState({ code: code }, '', url);
+    }
+
+    detailEl.innerHTML = '<div class="loading">読み込み中…</div>';
+
+    var p = state.dataCache[code]
+      ? Promise.resolve(state.dataCache[code])
+      : fetch(DATA_URL(code)).then(function(r){
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        }).then(function(d){ state.dataCache[code] = d; return d; });
+
+    p.then(renderDetail).catch(function(err){
+      detailEl.innerHTML = '<div class="error">データの取得に失敗しました: ' + esc(err.message) + '</div>';
+    });
+  }
+
+  window.addEventListener('popstate', function(e){
+    var code = e.state && e.state.code;
+    if (code) selectFood(code, false);
+  });
+
+  function fmtValue(v, unit){
+    if (!v) return '－';
+    var text = (v.raw != null && v.raw !== '') ? v.raw : '－';
+    if (v.value != null && unit) text += ' ' + unit;
+    return text;
+  }
+
+  function renderDetail(d){
+    var meta = state.meta;
+    var ids = meta.identifiers || {};
+    var tables = meta.tables || [];
+
+    var html = '<h2>' + esc(d.name) + '</h2>';
+    html += '<div class="d-code">食品番号 ' + esc(d.code) + '</div>';
+    html += '<div class="d-group"><span class="r-badge">' + esc(d.group_name) + '</span></div>';
+
+    if (d.remarks){
+      Object.keys(d.remarks).forEach(function(cat){
+        html += '<div class="remark"><b>備考（' + esc(catLabel(cat, tables)) + '）：</b>' + esc(d.remarks[cat]) + '</div>';
+      });
+    }
+
+    tables.forEach(function(t){
+      var obj = resolveCategory(d, t.category);
+      if (!obj) return;
+      var keys = Object.keys(obj).filter(function(k){ return k !== '_footnote_marks'; });
+      if (keys.length === 0) return;
+
+      html += '<section class="cat">';
+      html += '<h3>' + esc(t.table_name) + '</h3>';
+      html += '<p class="src">' + esc(t.source) + '</p>';
+      html += '<table class="nutri"><thead><tr><th>成分</th><th>値</th></tr></thead><tbody>';
+      keys.forEach(function(k){
+        var idInfo = ids[k];
+        var label = idInfo ? idInfo.label : k;
+        var unit = idInfo ? idInfo.unit : '';
+        html += '<tr><td>' + esc(label) + '</td><td class="val">' + esc(fmtValue(obj[k], unit)) + '</td></tr>';
+      });
+      html += '</tbody></table>';
+
+      if (obj._footnote_marks && obj._footnote_marks.length){
+        html += '<p class="footnotes">脚注記号: ' + obj._footnote_marks.map(esc).join(', ') + '</p>';
+      }
+      html += '</section>';
+    });
+
+    detailEl.innerHTML = html;
+  }
+
+  function resolveCategory(d, dottedPath){
+    var parts = dottedPath.split('.');
+    var cur = d;
+    for (var i = 0; i < parts.length; i++){
+      if (cur == null) return null;
+      cur = cur[parts[i]];
+    }
+    return cur || null;
+  }
+
+  function catLabel(dottedPath, tables){
+    var t = tables.filter(function(t){ return t.category === dottedPath; })[0];
+    return t ? t.table_name : dottedPath;
+  }
+})();
+</script>
+
+</body>
+</html>

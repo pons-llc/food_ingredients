@@ -75,6 +75,7 @@
     <h1>食品成分表示API</h1>
     <p class="lede">文部科学省「日本食品標準成分表（八訂）増補2023年」を元にした、食品の成分値を返す静的JSON API。認証不要・無料で利用できます。</p>
     <nav class="toc">
+      <a href="/search.html">食品を検索</a>
       <a href="#docs">ドキュメント</a>
       <a href="#terms">利用規約</a>
       <a href="#privacy">プライバシーポリシー</a>
@@ -104,8 +105,8 @@
       <li>各成分の識別子（<code>WATER</code>, <code>ENERC</code> など）の意味・単位は <code>/metadata.json</code> の <code>identifiers</code> を参照する。</li>
     </ol>
 
-    <pre><code>curl https://&lt;your-domain&gt;/index.json
-curl https://&lt;your-domain&gt;/data/01001.json</code></pre>
+    <pre><code>curl https://food-ingredients.pons-llc.com/index.json
+curl https://food-ingredients.pons-llc.com/data/01001.json</code></pre>
 
     <h3>値の読み方</h3>
     <p>各成分値は次の形のオブジェクトです。</p>
