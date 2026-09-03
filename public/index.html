@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>食品成分表示API</title>
+<meta name="description" content="日本食品標準成分表（八訂）増補2023年を元にした、食品の成分値を返す静的JSON API。ドキュメント・利用規約・プライバシーポリシー・連絡先。">
+<style>
+  :root{
+    --bg:#faf9f6; --surface:#ffffff; --text:#1c1b19; --muted:#6b6a66;
+    --border:#e7e5e0; --accent:#8a5a2b; --accent-bg:#f3ead9; --code-bg:#f3f2ee;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171613; --surface:#1f1e1a; --text:#eeece6; --muted:#a6a49c;
+      --border:#34322c; --accent:#e0a96d; --accent-bg:#2b2418; --code-bg:#26251f;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.75;
+  }
+  a{color:var(--accent)}
+  header.hero{
+    padding:3rem 1.5rem 2rem; border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 1.5rem}
+  header.hero .wrap{padding:0}
+  h1{font-size:1.6rem; margin:0 0 .4rem}
+  .lede{color:var(--muted); margin:0 0 1.2rem}
+  nav.toc{display:flex; flex-wrap:wrap; gap:.5rem 1rem; font-size:.9rem}
+  nav.toc a{text-decoration:none; padding:.3rem .7rem; border:1px solid var(--border); border-radius:999px; color:var(--text)}
+  nav.toc a:hover{border-color:var(--accent); color:var(--accent)}
+  main{padding:2.5rem 0 4rem}
+  section{margin-bottom:3rem; scroll-margin-top:1.5rem}
+  h2{font-size:1.2rem; border-bottom:1px solid var(--border); padding-bottom:.5rem; margin-top:0}
+  h3{font-size:1rem; margin-bottom:.4rem}
+  p{margin:.6rem 0}
+  ul,ol{padding-left:1.4rem}
+  li{margin:.35rem 0}
+  code{
+    background:var(--code-bg); padding:.15em .4em; border-radius:4px;
+    font-size:.9em; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  pre{
+    background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+    padding:1rem; overflow-x:auto; font-size:.85rem;
+  }
+  pre code{background:none; padding:0}
+  table{width:100%; border-collapse:collapse; font-size:.92rem; margin:.8rem 0}
+  th,td{text-align:left; padding:.5rem .6rem; border-bottom:1px solid var(--border)}
+  th{color:var(--muted); font-weight:600}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.2rem 1.4rem;
+  }
+  .badge{
+    display:inline-block; background:var(--accent-bg); color:var(--accent);
+    border-radius:6px; padding:.1em .5em; font-size:.8rem; font-weight:600;
+  }
+  footer{
+    border-top:1px solid var(--border); padding:2rem 1.5rem 3rem; color:var(--muted); font-size:.9rem;
+  }
+  footer .wrap{padding:0}
+  .contact-grid{display:grid; gap:.8rem; margin-top:1rem}
+  .contact-grid .card{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">Static JSON API</span>
+    <h1>食品成分表示API</h1>
+    <p class="lede">文部科学省「日本食品標準成分表（八訂）増補2023年」を元にした、食品の成分値を返す静的JSON API。認証不要・無料で利用できます。</p>
+    <nav class="toc">
+      <a href="#docs">ドキュメント</a>
+      <a href="#terms">利用規約</a>
+      <a href="#privacy">プライバシーポリシー</a>
+      <a href="#contact">連絡先・運営会社</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="docs">
+    <h2>ドキュメント</h2>
+
+    <h3>エンドポイント</h3>
+    <table>
+      <tr><th>パス</th><th>内容</th></tr>
+      <tr><td><a href="/index.json"><code>/index.json</code></a></td><td>全食品の食品番号・食品名などの一覧</td></tr>
+      <tr><td><code>/data/{食品番号}.json</code></td><td>1食品ごとの成分データ（例: <a href="/data/01001.json">/data/01001.json</a>）</td></tr>
+      <tr><td><a href="/metadata.json"><code>/metadata.json</code></a></td><td>成分識別子の和名・単位、食品群コード表、値注記の凡例</td></tr>
+      <tr><td><a href="/llms.txt"><code>/llms.txt</code></a></td><td>LLM／エージェント向けの利用ガイド</td></tr>
+    </table>
+
+    <h3>使い方</h3>
+    <ol>
+      <li><code>/index.json</code> を取得し、食品名などから目的の食品の <code>code</code>（食品番号、5桁）を特定する。</li>
+      <li><code>/data/{code}.json</code> を取得し、成分データを得る。</li>
+      <li>各成分の識別子（<code>WATER</code>, <code>ENERC</code> など）の意味・単位は <code>/metadata.json</code> の <code>identifiers</code> を参照する。</li>
+    </ol>
+
+    <pre><code>curl https://&lt;your-domain&gt;/index.json
+curl https://&lt;your-domain&gt;/data/01001.json</code></pre>
+
+    <h3>値の読み方</h3>
+    <p>各成分値は次の形のオブジェクトです。</p>
+    <pre><code>{ "raw": "(11.3)", "value": 11.3, "estimated": true, "trace": false, "unmeasured": false }</code></pre>
+    <table>
+      <tr><th>フィールド</th><th>意味</th></tr>
+      <tr><td><code>raw</code></td><td>Excel原本のセルの値をそのまま保持したもの</td></tr>
+      <tr><td><code>value</code></td><td>数値化できた場合の数値。<code>Tr</code>・<code>-</code>・空欄などは <code>null</code></td></tr>
+      <tr><td><code>estimated</code></td><td><code>true</code> なら推計値（原本で <code>(数値)</code> と表記）</td></tr>
+      <tr><td><code>trace</code></td><td><code>true</code> なら微量（<code>Tr</code>）</td></tr>
+      <tr><td><code>unmeasured</code></td><td><code>true</code> なら未測定（<code>-</code>）</td></tr>
+    </table>
+
+    <h3>出典</h3>
+    <p>文部科学省「日本食品標準成分表（八訂）増補2023年」。本APIは同表のデータを機械可読な形式に変換して再配布するものであり、文部科学省による公式サービスではありません。</p>
+  </section>
+
+  <section id="terms">
+    <h2>利用規約</h2>
+    <div class="card">
+      <p>本ページは、食品成分表示API（以下「本サービス」）の利用条件を定めるものです。本サービスにアクセス・利用した時点で、本規約に同意したものとみなします。</p>
+
+      <h3>1. サービス内容</h3>
+      <p>本サービスは、文部科学省「日本食品標準成分表（八訂）増補2023年」のデータを元に生成した静的JSONファイルを無償で提供するものです。</p>
+
+      <h3>2. 免責事項</h3>
+      <ul>
+        <li>本サービスが提供するデータの正確性・完全性・最新性について、いかなる保証も行いません。実際の食品の成分値とは異なる場合があります。</li>
+        <li>本サービスの利用により生じたいかなる損害についても、運営者は責任を負いません。</li>
+        <li>健康・医療・栄養指導等、人の生命・健康に関わる判断の唯一の根拠として本サービスのデータを用いないでください。</li>
+      </ul>
+
+      <h3>3. サービスの変更・停止</h3>
+      <p>運営者は、事前の予告なく本サービスの内容変更、提供の中断・停止を行うことができるものとします。</p>
+
+      <h3>4. 禁止事項</h3>
+      <ul>
+        <li>本サービスに過度な負荷をかける行為</li>
+        <li>本サービスを、文部科学省または運営者の公式見解であるかのように偽って利用する行為</li>
+        <li>法令または公序良俗に反する行為</li>
+      </ul>
+
+      <h3>5. 規約の変更</h3>
+      <p>運営者は、必要と判断した場合、本規約を変更できるものとします。変更後の規約は本ページに掲載した時点で効力を生じます。</p>
+
+      <p><small>最終更新日: 2026年9月3日</small></p>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2>プライバシーポリシー</h2>
+    <div class="card">
+      <h3>1. 収集する情報</h3>
+      <p>本サービスは静的ファイルの配信のみを行い、フォーム入力やアカウント登録機能を持たないため、利用者から個人情報を直接収集することはありません。</p>
+
+      <h3>2. アクセスログについて</h3>
+      <p>本サービスはCloudflare Pages上で配信されており、配信インフラの提供者であるCloudflareにより、セキュリティ・障害対応・不正利用防止の目的で、IPアドレスやアクセス日時等のアクセスログが一時的に記録される場合があります。これらは運営者が個別に収集・分析するものではありません。</p>
+
+      <h3>3. Cookieについて</h3>
+      <p>本サービス自体はCookieを発行しません。</p>
+
+      <h3>4. 第三者提供</h3>
+      <p>法令に基づく場合を除き、取得した情報を第三者に提供することはありません。</p>
+
+      <h3>5. お問い合わせ</h3>
+      <p>本ポリシーに関するお問い合わせは、下記「連絡先・運営会社」よりご連絡ください。</p>
+
+      <p><small>最終更新日: 2026年9月3日</small></p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>連絡先・運営会社</h2>
+    <div class="contact-grid">
+      <div class="card">
+        <span>運営会社</span>
+        <a href="https://www.pons-llc.com/" target="_blank" rel="noopener">PONS LLC（www.pons-llc.com）</a>
+      </div>
+      <div class="card">
+        <span>お問い合わせ（X）</span>
+        <a href="https://x.com/ponsllc" target="_blank" rel="noopener">@ponsllc</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 PONS LLC. データ出典: 文部科学省「日本食品標準成分表（八訂）増補2023年」</p>
+  </div>
+</footer>
+
+</body>
+</html>
