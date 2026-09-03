@@ -1,0 +1,9 @@
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+
+/*.json
+  Content-Type: application/json; charset=utf-8
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

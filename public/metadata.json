@@ -1,0 +1,2571 @@
+{
+ "title": "食品成分表示API",
+ "source": "日本食品標準成分表（八訂）増補2023年（文部科学省）",
+ "edition_note": "data/ 配下のExcel原本のファイル名日付をそのまま採用",
+ "food_count": 2541,
+ "food_groups": {
+  "01": "穀類",
+  "02": "いも及びでん粉類",
+  "03": "砂糖及び甘味類",
+  "04": "豆類",
+  "05": "種実類",
+  "06": "野菜類",
+  "07": "果実類",
+  "08": "きのこ類",
+  "09": "藻類",
+  "10": "魚介類",
+  "11": "肉類",
+  "12": "卵類",
+  "13": "乳類",
+  "14": "油脂類",
+  "15": "菓子類",
+  "16": "し好飲料類",
+  "17": "調味料及び香辛料類",
+  "18": "調理済み流通食品類"
+ },
+ "tables": [
+  {
+   "category": "general",
+   "table_name": "本表",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  {
+   "category": "amino_acids.per_100g",
+   "table_name": "アミノ酸成分表 第1表",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  {
+   "category": "amino_acids.per_g_nitrogen",
+   "table_name": "アミノ酸成分表 第2表",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  {
+   "category": "amino_acids.per_g_protein",
+   "table_name": "アミノ酸成分表 第3表",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  {
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "table_name": "アミノ酸成分表 第4表",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  {
+   "category": "fatty_acids.per_100g",
+   "table_name": "脂肪酸成分表 第1表",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  {
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "table_name": "脂肪酸成分表 第2表",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  {
+   "category": "fatty_acids.per_g_lipid",
+   "table_name": "脂肪酸成分表 第3表",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  {
+   "category": "carbohydrates.available_and_polyols",
+   "table_name": "炭水化物成分表 本表",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  {
+   "category": "carbohydrates.fiber",
+   "table_name": "炭水化物成分表 別表1",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  {
+   "category": "organic_acids",
+   "table_name": "炭水化物成分表 別表2",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  }
+ ],
+ "identifiers": {
+  "REFUSE": {
+   "label": "廃棄率",
+   "unit": "%",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ENERC": {
+   "label": "エネルギー",
+   "unit": "kJ",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ENERC_KCAL": {
+   "label": "エネルギー",
+   "unit": "kcal",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "WATER": {
+   "label": "水分",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "PROTCAA": {
+   "label": "たんぱく質－アミノ酸組成によるたんぱく質",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "PROT-": {
+   "label": "たんぱく質",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "FATNLEA": {
+   "label": "脂質－脂肪酸のトリアシルグリセロール当量",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CHOLE": {
+   "label": "脂質－コレステロール",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "FAT-": {
+   "label": "脂質",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CHOAVLM": {
+   "label": "炭水化物－利用可能炭水化物－利用可能炭水化物（単糖当量）",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CHOAVL": {
+   "label": "炭水化物－利用可能炭水化物－利用可能炭水化物（質量計）",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CHOAVLDF-": {
+   "label": "炭水化物－利用可能炭水化物－差引き法による利用可能炭水化物",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "FIB-": {
+   "label": "炭水化物－食物繊維総量",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "POLYL": {
+   "label": "炭水化物－糖アルコール",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CHOCDF-": {
+   "label": "炭水化物",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "OA": {
+   "label": "有機酸",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ASH": {
+   "label": "灰分",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "NA": {
+   "label": "無機質－ナトリウム",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "K": {
+   "label": "無機質－カリウム",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CA": {
+   "label": "無機質－カルシウム",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "MG": {
+   "label": "無機質－マグネシウム",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "P": {
+   "label": "無機質－リン",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "FE": {
+   "label": "無機質－鉄",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ZN": {
+   "label": "無機質－亜鉛",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CU": {
+   "label": "無機質－銅",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "MN": {
+   "label": "無機質－マンガン",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ID": {
+   "label": "無機質－ヨウ素",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "SE": {
+   "label": "無機質－セレン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CR": {
+   "label": "無機質－クロム",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "MO": {
+   "label": "無機質－モリブデン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "RETOL": {
+   "label": "ビタミン－ビタミンA－レチノール",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CARTA": {
+   "label": "ビタミン－ビタミンA－α|カロテン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CARTB": {
+   "label": "ビタミン－ビタミンA－β|カロテン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CRYPXB": {
+   "label": "ビタミン－ビタミンA－β|クリプトキサンチン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "CARTBEQ": {
+   "label": "ビタミン－ビタミンA－β|カロテン当量",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITA_RAE": {
+   "label": "ビタミン－ビタミンA－レチノール活性当量",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITD": {
+   "label": "ビタミン－ビタミンD",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "TOCPHA": {
+   "label": "ビタミン－ビタミンE－α|トコフェロール",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "TOCPHB": {
+   "label": "ビタミン－ビタミンE－β|トコフェロール",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "TOCPHG": {
+   "label": "ビタミン－ビタミンE－γ|トコフェロール",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "TOCPHD": {
+   "label": "ビタミン－ビタミンE－δ|トコフェロール",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITK": {
+   "label": "ビタミン－ビタミンK",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "THIA": {
+   "label": "ビタミン－ビタミンＢ１",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "RIBF": {
+   "label": "ビタミン－ビタミンB２",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "NIA": {
+   "label": "ビタミン－ナイアシン",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "NE": {
+   "label": "ビタミン－ナイアシン当量",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITB6A": {
+   "label": "ビタミン－ビタミンＢ６",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITB12": {
+   "label": "ビタミン－ビタミンＢ１２",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "FOL": {
+   "label": "ビタミン－葉酸",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "PANTAC": {
+   "label": "ビタミン－パントテン酸",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "BIOT": {
+   "label": "ビタミン－ビオチン",
+   "unit": "μg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "VITC": {
+   "label": "ビタミン－ビタミンC",
+   "unit": "mg",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ALC": {
+   "label": "アルコール",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "NACL_EQ": {
+   "label": "食塩相当量",
+   "unit": "g",
+   "table": "本表",
+   "category": "general",
+   "source": "日本食品標準成分表（八訂）増補2023年 本表"
+  },
+  "ILE": {
+   "label": "イソロイシン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "LEU": {
+   "label": "ロイシン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "LYS": {
+   "label": "リシン（リジン）",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "MET": {
+   "label": "含硫アミノ酸；メチオニン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "CYS": {
+   "label": "含硫アミノ酸；シスチン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "AAS": {
+   "label": "含硫アミノ酸；合計",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "PHE": {
+   "label": "芳香族アミノ酸；フェニルアラニン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "TYR": {
+   "label": "芳香族アミノ酸；チロシン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "AAA": {
+   "label": "芳香族アミノ酸；合計",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "THR": {
+   "label": "トレオニン（スレオニン）",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "TRP": {
+   "label": "トリプトファン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "VAL": {
+   "label": "バリン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "HIS": {
+   "label": "ヒスチジン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "ARG": {
+   "label": "アルギニン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "ALA": {
+   "label": "アラニン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "ASP": {
+   "label": "アスパラギン酸",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "GLU": {
+   "label": "グルタミン酸",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "GLY": {
+   "label": "グリシン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "PRO": {
+   "label": "プロリン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "SER": {
+   "label": "セリン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "HYP": {
+   "label": "ヒドロキシプロリン",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "AAT": {
+   "label": "アミノ酸組成計",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "AMMON": {
+   "label": "アンモニア",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "AMMON-E": {
+   "label": "剰余アンモニア",
+   "unit": "mg/100g",
+   "table": "アミノ酸成分表 第1表",
+   "category": "amino_acids.per_100g",
+   "source": "アミノ酸成分表編 第1表（可食部100g当たり）"
+  },
+  "ILEN": {
+   "label": "イソロイシン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "LEUN": {
+   "label": "ロイシン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "LYSN": {
+   "label": "リシン（リジン）",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "METN": {
+   "label": "含硫アミノ酸；メチオニン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "CYSN": {
+   "label": "含硫アミノ酸；シスチン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "AASN": {
+   "label": "含硫アミノ酸；合計",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "PHEN": {
+   "label": "芳香族アミノ酸；フェニルアラニン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "TYRN": {
+   "label": "芳香族アミノ酸；チロシン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "AAAN": {
+   "label": "芳香族アミノ酸；合計",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "THRN": {
+   "label": "トレオニン（スレオニン）",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "TRPN": {
+   "label": "トリプトファン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "VALN": {
+   "label": "バリン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "HISN": {
+   "label": "ヒスチジン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "ARGN": {
+   "label": "アルギニン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "ALAN": {
+   "label": "アラニン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "ASPN": {
+   "label": "アスパラギン酸",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "GLUN": {
+   "label": "グルタミン酸",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "GLYN": {
+   "label": "グリシン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "PRON": {
+   "label": "プロリン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "SERN": {
+   "label": "セリン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "HYPN": {
+   "label": "ヒドロキシプロリン",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "AATN": {
+   "label": "アミノ酸組成計",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "AMMONN": {
+   "label": "アンモニア",
+   "unit": "mg/g基準窒素",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "XNA": {
+   "label": "アミノ酸組成によるたんぱく質に対する窒素-たんぱく質換算係数",
+   "unit": "－",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "XN": {
+   "label": "窒素-たんぱく質換算係数（基準窒素によるたんぱく質に対する係数）",
+   "unit": "－",
+   "table": "アミノ酸成分表 第2表",
+   "category": "amino_acids.per_g_nitrogen",
+   "source": "アミノ酸成分表編 第2表（基準窒素1g当たり）"
+  },
+  "ILEPA": {
+   "label": "イソロイシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "LEUPA": {
+   "label": "ロイシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "LYSPA": {
+   "label": "リシン（リジン）",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "METPA": {
+   "label": "含硫アミノ酸；メチオニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "CYSPA": {
+   "label": "含硫アミノ酸；シスチン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "AASPA": {
+   "label": "含硫アミノ酸；合計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "PHEPA": {
+   "label": "芳香族アミノ酸；フェニルアラニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "TYRPA": {
+   "label": "芳香族アミノ酸；チロシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "AAAPA": {
+   "label": "芳香族アミノ酸合計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "THRPA": {
+   "label": "トレオニン（スレオニン）",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "TRPPA": {
+   "label": "トリプトファン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "VALPA": {
+   "label": "バリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "HISPA": {
+   "label": "ヒスチジン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "ARGPA": {
+   "label": "アルギニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "ALAPA": {
+   "label": "アラニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "ASPPA": {
+   "label": "アスパラギン酸",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "GLUPA": {
+   "label": "グルタミン酸",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "GLYPA": {
+   "label": "グリシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "PROPA": {
+   "label": "プロリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "SERPA": {
+   "label": "セリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "HYPPA": {
+   "label": "ヒドロキシプロリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "AATPA": {
+   "label": "アミノ酸組成計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "AMMONPA": {
+   "label": "アンモニア",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第3表",
+   "category": "amino_acids.per_g_protein",
+   "source": "アミノ酸成分表編 第3表（アミノ酸組成によるたんぱく質1g当たり）"
+  },
+  "ILEP": {
+   "label": "イソロイシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "LEUP": {
+   "label": "ロイシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "LYSP": {
+   "label": "リシン（リジン）",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "METP": {
+   "label": "含硫アミノ酸；メチオニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "CYSP": {
+   "label": "含硫アミノ酸；シスチン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "AASP": {
+   "label": "含硫アミノ酸；合計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "PHEP": {
+   "label": "芳香族アミノ酸；フェニルアラニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "TYRP": {
+   "label": "芳香族アミノ酸；チロシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "AAAP": {
+   "label": "芳香族アミノ酸合計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "THRP": {
+   "label": "トレオニン（スレオニン）",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "TRPP": {
+   "label": "トリプトファン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "VALP": {
+   "label": "バリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "HISP": {
+   "label": "ヒスチジン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "ARGP": {
+   "label": "アルギニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "ALAP": {
+   "label": "アラニン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "ASPP": {
+   "label": "アスパラギン酸",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "GLUP": {
+   "label": "グルタミン酸",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "GLYP": {
+   "label": "グリシン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "PROP": {
+   "label": "プロリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "SERP": {
+   "label": "セリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "HYPP": {
+   "label": "ヒドロキシプロリン",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "AATP": {
+   "label": "アミノ酸組成計",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "AMMONP": {
+   "label": "アンモニア",
+   "unit": "mg/gたんぱく質",
+   "table": "アミノ酸成分表 第4表",
+   "category": "amino_acids.per_g_protein_nitrogen",
+   "source": "アミノ酸成分表編 第4表（基準窒素によるたんぱく質1g当たり）"
+  },
+  "FACID": {
+   "label": "脂肪酸総量",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FASAT": {
+   "label": "飽和脂肪酸",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FAMS": {
+   "label": "一価不飽和脂肪酸",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FAPU": {
+   "label": "多価不飽和脂肪酸",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FAPUN3": {
+   "label": "n-3系多価不飽和脂肪酸",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FAPUN6": {
+   "label": "n-6系多価不飽和脂肪酸",
+   "unit": "g/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F4D0": {
+   "label": "4:0酪酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F6D0": {
+   "label": "6:0ヘキサン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F7D0": {
+   "label": "7:0ヘプタン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F8D0": {
+   "label": "8:0オクタン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F10D0": {
+   "label": "10:0デカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F12D0": {
+   "label": "12:0ラウリン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F13D0": {
+   "label": "13:0トリデカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F14D0": {
+   "label": "14:0ミリスチン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F15D0": {
+   "label": "15:0ペンタデカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F15D0AI": {
+   "label": "15:0antペンタデカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D0": {
+   "label": "16:0パルミチン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D0I": {
+   "label": "16:0isoパルミチン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F17D0": {
+   "label": "17:0ヘプタデカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F17D0AI": {
+   "label": "17:0antヘプタデカン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D0": {
+   "label": "18:0ステアリン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D0": {
+   "label": "20:0アラキジン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D0": {
+   "label": "22:0ベヘン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F24D0": {
+   "label": "24:0リグノセリン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F10D1": {
+   "label": "10:1デセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F14D1": {
+   "label": "14:1ミリストレイン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F15D1": {
+   "label": "15:1ペンタデセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D1": {
+   "label": "16:1パルミトレイン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F17D1": {
+   "label": "17:1ヘプタデセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D1": {
+   "label": "18:1計",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D1CN9": {
+   "label": "18:1n-9オレイン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D1CN7": {
+   "label": "18:1n-7シス-バクセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D1": {
+   "label": "20:1イコセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D1": {
+   "label": "22:1ドコセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F24D1": {
+   "label": "24:1テトラコセン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D2": {
+   "label": "16:2ヘキサデカジエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D3": {
+   "label": "16:3ヘキサデカトリエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F16D4": {
+   "label": "16:4ヘキサデカテトラエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D2N6": {
+   "label": "18:2n-6リノール酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D3N3": {
+   "label": "18:3n-3α‐リノレン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D3N6": {
+   "label": "18:3n-6γ‐リノレン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F18D4N3": {
+   "label": "18:4n-3オクタデカテトラエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D2N6": {
+   "label": "20:2n-6イコサジエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D3N3": {
+   "label": "20:3n-3イコサトリエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D3N6": {
+   "label": "20:3n-6イコサトリエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D4N3": {
+   "label": "20:4n-3イコサテトラエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D4N6": {
+   "label": "20:4n-6アラキドン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F20D5N3": {
+   "label": "20:5n-3イコサペンタエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F21D5N3": {
+   "label": "21:5n-3ヘンイコサペンタエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D2": {
+   "label": "22:2ドコサジエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D4N6": {
+   "label": "22:4n-6ドコサテトラエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D5N3": {
+   "label": "22:5n-3ドコサペンタエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D5N6": {
+   "label": "22:5n-6ドコサペンタエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "F22D6N3": {
+   "label": "22:6n-3ドコサヘキサエン酸",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FAUN": {
+   "label": "未同定物質",
+   "unit": "mg/100g",
+   "table": "脂肪酸成分表 第1表",
+   "category": "fatty_acids.per_100g",
+   "source": "脂肪酸成分表編 第1表（可食部100g当たり・本表）"
+  },
+  "FASATF": {
+   "label": "飽和脂肪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FAMSF": {
+   "label": "一価不飽和脂肪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FAPUF": {
+   "label": "多価不飽和脂肪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FAPUN3F": {
+   "label": "n-3系多価不飽和脂肪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FAPUN6F": {
+   "label": "n-6系多価不飽和脂肪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F4D0F": {
+   "label": "4:0酪酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F6D0F": {
+   "label": "6:0ヘキサン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F7D0F": {
+   "label": "7:0ヘプタン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F8D0F": {
+   "label": "8:0オクタン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F10D0F": {
+   "label": "10:0デカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F12D0F": {
+   "label": "12:0ラウリン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F13D0F": {
+   "label": "13:0トリデカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F14D0F": {
+   "label": "14:0ミリスチン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F15D0F": {
+   "label": "15:0ペンタデカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F15D0AIF": {
+   "label": "15:0antペンタデカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D0F": {
+   "label": "16:0パルミチン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D0IF": {
+   "label": "16:0isoパルミチン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F17D0F": {
+   "label": "17:0ヘプタデカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F17D0AIF": {
+   "label": "17:0antヘプタデカン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D0F": {
+   "label": "18:0ステアリン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D0F": {
+   "label": "20:0アラキジン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D0F": {
+   "label": "22:0ベヘン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F24D0F": {
+   "label": "24:0リグノセリン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F10D1F": {
+   "label": "10:1デセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F14D1F": {
+   "label": "14:1ミリストレイン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F15D1F": {
+   "label": "15:1ペンタデセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D1F": {
+   "label": "16:1パルミトレイン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F17D1F": {
+   "label": "17:1ヘプタデセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D1F": {
+   "label": "18:1計",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D1CN9F": {
+   "label": "18:1n-9オレイン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D1CN7F": {
+   "label": "18:1n-7シス-バクセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D1F": {
+   "label": "20:1イコセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D1F": {
+   "label": "22:1ドコセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F24D1F": {
+   "label": "24:1テトラコセン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D2F": {
+   "label": "16:2ヘキサデカジエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D3F": {
+   "label": "16:3ヘキサデカトリエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F16D4F": {
+   "label": "16:4ヘキサデカテトラエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D2N6F": {
+   "label": "18:2n-6リノール酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D3N3F": {
+   "label": "18:3n-3α‐リノレン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D3N6F": {
+   "label": "18:3n-6γ‐リノレン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F18D4N3F": {
+   "label": "18:4n-3オクタデカテトラエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D2N6F": {
+   "label": "20:2n-6イコサジエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D3N3F": {
+   "label": "20:3n-3イコサトリエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D3N6F": {
+   "label": "20:3n-6イコサトリエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D4N3F": {
+   "label": "20:4n-3イコサテトラエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D4N6F": {
+   "label": "20:4n-6アラキドン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F20D5N3F": {
+   "label": "20:5n-3イコサペンタエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F21D5N3F": {
+   "label": "21:5n-3ヘンイコサペンタエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D2F": {
+   "label": "22:2ドコサジエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D4N6F": {
+   "label": "22:4n-6ドコサテトラエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D5N3F": {
+   "label": "22:5n-3ドコサペンタエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D5N6F": {
+   "label": "22:5n-6ドコサペンタエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "F22D6N3F": {
+   "label": "22:6n-3ドコサヘキサエン酸",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FAUNF": {
+   "label": "未同定物質",
+   "unit": "g/100g脂肪酸総量",
+   "table": "脂肪酸成分表 第2表",
+   "category": "fatty_acids.per_100g_fatty_acid",
+   "source": "脂肪酸成分表編 第2表（脂肪酸100g当たり・脂肪酸組成表）"
+  },
+  "FACIDL": {
+   "label": "脂肪酸総量",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FASATL": {
+   "label": "飽和脂肪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FAMSL": {
+   "label": "一価不飽和脂肪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FAPUL": {
+   "label": "多価不飽和脂肪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FAPUN3L": {
+   "label": "n-3系多価不飽和脂肪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FAPUN6L": {
+   "label": "n-6系多価不飽和脂肪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F4D0L": {
+   "label": "4:0酪酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F6D0L": {
+   "label": "6:0ヘキサン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F7D0L": {
+   "label": "7:0ヘプタン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F8D0L": {
+   "label": "8:0オクタン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F10D0L": {
+   "label": "10:0デカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F12D0L": {
+   "label": "12:0ラウリン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F13D0L": {
+   "label": "13:0トリデカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F14D0L": {
+   "label": "14:0ミリスチン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F15D0L": {
+   "label": "15:0ペンタデカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F15D0AIL": {
+   "label": "15:0antペンタデカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D0L": {
+   "label": "16:0パルミチン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D0IL": {
+   "label": "16:0isoパルミチン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F17D0L": {
+   "label": "17:0ヘプタデカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F17D0AIL": {
+   "label": "17:0antヘプタデカン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D0L": {
+   "label": "18:0ステアリン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D0L": {
+   "label": "20:0アラキジン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D0L": {
+   "label": "22:0ベヘン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F24D0L": {
+   "label": "24:0リグノセリン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F10D1L": {
+   "label": "10:1デセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F14D1L": {
+   "label": "14:1ミリストレイン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F15D1L": {
+   "label": "15:1ペンタデセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D1L": {
+   "label": "16:1パルミトレイン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F17D1L": {
+   "label": "17:1ヘプタデセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D1L": {
+   "label": "18:1計",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D1CN9L": {
+   "label": "18:1n-9オレイン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D1CN7L": {
+   "label": "18:1n-7シス-バクセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D1L": {
+   "label": "20:1イコセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D1L": {
+   "label": "22:1ドコセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F24D1L": {
+   "label": "24:1テトラコセン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D2L": {
+   "label": "16:2ヘキサデカジエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D3L": {
+   "label": "16:3ヘキサデカトリエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F16D4L": {
+   "label": "16:4ヘキサデカテトラエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D2N6L": {
+   "label": "18:2n-6リノール酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D3N3L": {
+   "label": "18:3n-3α‐リノレン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D3N6L": {
+   "label": "18:3n-6γ‐リノレン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F18D4N3L": {
+   "label": "18:4n-3オクタデカテトラエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D2N6L": {
+   "label": "20:2n-6イコサジエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D3N3L": {
+   "label": "20:3n-3イコサトリエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D3N6L": {
+   "label": "20:3n-6イコサトリエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D4N3L": {
+   "label": "20:4n-3イコサテトラエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D4N6L": {
+   "label": "20:4n-6アラキドン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F20D5N3L": {
+   "label": "20:5n-3イコサペンタエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F21D5N3L": {
+   "label": "21:5n-3ヘンイコサペンタエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D2L": {
+   "label": "22:2ドコサジエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D4N6L": {
+   "label": "22:4n-6ドコサテトラエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D5N3L": {
+   "label": "22:5n-3ドコサペンタエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D5N6L": {
+   "label": "22:5n-6ドコサペンタエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "F22D6N3L": {
+   "label": "22:6n-3ドコサヘキサエン酸",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "FAUNL": {
+   "label": "未同定物質",
+   "unit": "mg/g脂質",
+   "table": "脂肪酸成分表 第3表",
+   "category": "fatty_acids.per_g_lipid",
+   "source": "脂肪酸成分表編 第3表（脂質1g当たり）"
+  },
+  "STARCH": {
+   "label": "でん粉",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "GLUS": {
+   "label": "ぶどう糖",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "FRUS": {
+   "label": "果糖",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "GALS": {
+   "label": "ガラクトース",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "SUCS": {
+   "label": "しょ糖",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "MALS": {
+   "label": "麦芽糖",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "LACS": {
+   "label": "乳糖",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "TRES": {
+   "label": "トレハロース",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "SORTL": {
+   "label": "糖アルコール－ソルビトール",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "MANTL": {
+   "label": "糖アルコール－マンニトール",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 本表",
+   "category": "carbohydrates.available_and_polyols",
+   "source": "炭水化物成分表編 本表（利用可能炭水化物・糖アルコール）"
+  },
+  "FIBSOL": {
+   "label": "プロスキー変法－水溶性食物繊維",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIBINS": {
+   "label": "プロスキー変法－不溶性食物繊維",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIBTG": {
+   "label": "プロスキー変法－食物繊維総量",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIB-SDFS": {
+   "label": "低分子量水溶性食物繊維",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIB-SDFP": {
+   "label": "高分子量水溶性食物繊維",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIB-IDF": {
+   "label": "不溶性食物繊維",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "STARES": {
+   "label": "難消化性でん粉",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FIB-TDF": {
+   "label": "食物繊維総量",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表1",
+   "category": "carbohydrates.fiber",
+   "source": "炭水化物成分表編 別表1（食物繊維）"
+  },
+  "FORAC": {
+   "label": "ギ酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "ACEAC": {
+   "label": "酢酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "GLYCLAC": {
+   "label": "グリコール酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "LACAC": {
+   "label": "乳酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "GLUCAC": {
+   "label": "グルコン酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "OXALAC": {
+   "label": "シュウ酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "MOLAC": {
+   "label": "マロン酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "SUCAC": {
+   "label": "コハク酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "FUMAC": {
+   "label": "フマル酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "MALAC": {
+   "label": "リンゴ酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "TARAC": {
+   "label": "酒石酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "GLUAKAC": {
+   "label": "α‐ケトグルタル酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "CITAC": {
+   "label": "クエン酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "SALAC": {
+   "label": "サリチル酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "PCHOUAC": {
+   "label": "p‐クマル酸",
+   "unit": "mg/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "CAFFAC": {
+   "label": "コーヒー酸",
+   "unit": "mg/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "FERAC": {
+   "label": "フェルラ酸",
+   "unit": "mg/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "CHLRAC": {
+   "label": "クロロゲン酸",
+   "unit": "mg/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "QUINAC": {
+   "label": "キナ酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "OROTAC": {
+   "label": "オロト酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "PYROGAC": {
+   "label": "ピログルタミン酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  },
+  "PROPAC": {
+   "label": "プロピオン酸",
+   "unit": "g/100g",
+   "table": "炭水化物成分表 別表2",
+   "category": "organic_acids",
+   "source": "炭水化物成分表編 別表2（有機酸）"
+  }
+ },
+ "value_annotation_legend": {
+  "raw": "Excel原本のセルの値をそのまま文字列/数値で保持したもの",
+  "value": "raw を数値化できた場合の数値。Tr・-・未測定・空欄などは null",
+  "estimated": "true の場合、raw が「(数値)」の形式＝他の成分値等からの推計値であることを示す",
+  "trace": "true の場合、raw が「Tr」＝微量（最小記載量に達していないが含まれる）であることを示す",
+  "unmeasured": "true の場合、raw が「-」＝未測定であることを示す",
+  "_footnote_marks": "識別子の割り当てられていない結合セル（脚注記号等）にゴミでない値があった場合にのみ、column（0始まり列インデックス）とraw値を保持する"
+ },
+ "primary_key": "code（食品番号、5桁）",
+ "endpoints": {
+  "index": "/index.json",
+  "item": "/data/{食品番号}.json",
+  "metadata": "/metadata.json",
+  "usage_guide": "/llms.txt"
+ }
+}
