@@ -80,6 +80,18 @@
   .remark{background:var(--code-bg); border-radius:8px; padding:.7rem .9rem; font-size:.85rem; color:var(--muted); margin-bottom:1.4rem}
   .remark b{color:var(--text)}
 
+  .summary{margin-bottom:1.6rem}
+  .summary h3{font-size:.9rem; color:var(--muted); font-weight:600; margin:0 0 .6rem}
+  .summary-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:.7rem}
+  @media (min-width:520px){ .summary-grid{grid-template-columns:repeat(4, 1fr)} }
+  .stat{
+    background:var(--accent-bg); border-radius:8px; padding:.6rem .8rem;
+  }
+  .stat .s-label{display:block; font-size:.76rem; color:var(--accent); font-weight:600}
+  .stat .s-value{display:block; font-size:1.15rem; margin-top:.15rem; font-variant-numeric:tabular-nums}
+  .stat .s-value .s-unit{font-size:.72rem; margin-left:.15em; color:var(--muted)}
+  .summary .note{color:var(--muted); font-size:.76rem; margin:.5rem 0 0}
+
   section.cat{margin-bottom:1.8rem; scroll-margin-top:1rem}
   section.cat h3{font-size:1rem; border-bottom:1px solid var(--border); padding-bottom:.4rem; margin:0 0 .2rem}
   section.cat .src{color:var(--muted); font-size:.78rem; margin:0 0 .6rem}
@@ -239,6 +251,54 @@
     return text;
   }
 
+  var SUMMARY_ITEMS = [
+    { label: 'カロリー', get: function(d){ return simple(d, 'general', 'ENERC_KCAL'); } },
+    { label: 'タンパク質', get: function(d){ return simple(d, 'general', 'PROT-'); } },
+    { label: '脂質', get: function(d){ return simple(d, 'general', 'FAT-'); } },
+    { label: '炭水化物', get: function(d){ return simple(d, 'general', 'CHOCDF-'); } },
+    { label: '食物繊維', get: function(d){ return simple(d, 'general', 'FIB-'); } },
+    { label: 'ナトリウム', get: function(d){ return simple(d, 'general', 'NA'); } },
+    { label: '食塩相当量', get: function(d){ return simple(d, 'general', 'NACL_EQ'); } },
+    { label: '不飽和脂肪酸', get: unsaturatedFat }
+  ];
+
+  function simple(d, catPath, key){
+    var obj = resolveCategory(d, catPath);
+    var v = obj && obj[key];
+    if (!v) return null;
+    var idInfo = state.meta.identifiers[key];
+    return { text: fmtValue(v, idInfo ? idInfo.unit : ''), missing: v.value == null };
+  }
+
+  function unsaturatedFat(d){
+    var fa = resolveCategory(d, 'fatty_acids.per_100g');
+    if (!fa) return null;
+    var ms = fa.FAMS, pu = fa.FAPU;
+    if (ms && pu && ms.value != null && pu.value != null){
+      var sum = Math.round((ms.value + pu.value) * 100) / 100;
+      return { text: sum + ' g', missing: false };
+    }
+    if (ms && ms.value != null && (!pu || pu.value == null)){
+      return { text: '一価 ' + ms.value + ' g のみ判明', missing: true };
+    }
+    if (pu && pu.value != null && (!ms || ms.value == null)){
+      return { text: '多価 ' + pu.value + ' g のみ判明', missing: true };
+    }
+    return null;
+  }
+
+  function renderSummary(d){
+    var html = '<div class="summary"><h3>主な栄養成分（可食部100gあたり）</h3><div class="summary-grid">';
+    SUMMARY_ITEMS.forEach(function(item){
+      var res = item.get(d);
+      var text = res ? res.text : '－';
+      html += '<div class="stat"><span class="s-label">' + esc(item.label) + '</span>' +
+        '<span class="s-value">' + esc(text) + '</span></div>';
+    });
+    html += '</div><p class="note">不飽和脂肪酸は一価不飽和脂肪酸＋多価不飽和脂肪酸（脂肪酸成分表 第1表）の合計値。出典・注記の詳細は下記の各成分表を参照してください。</p></div>';
+    return html;
+  }
+
   function renderDetail(d){
     var meta = state.meta;
     var ids = meta.identifiers || {};
@@ -247,6 +307,8 @@
     var html = '<h2>' + esc(d.name) + '</h2>';
     html += '<div class="d-code">食品番号 ' + esc(d.code) + '</div>';
     html += '<div class="d-group"><span class="r-badge">' + esc(d.group_name) + '</span></div>';
+
+    html += renderSummary(d);
 
     if (d.remarks){
       Object.keys(d.remarks).forEach(function(cat){
