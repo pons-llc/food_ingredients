@@ -78,6 +78,23 @@
   .sem-badge{color:#6b7fb3; background:#e8ecf7}
   @media (prefers-color-scheme: dark){ .sem-badge{color:#a9b8e8; background:#242a3d} }
 
+  .ai-toggle-row{display:flex; align-items:center; gap:.4em}
+  .ai-toggle-row label{display:flex; align-items:center; gap:.4em; cursor:pointer}
+  .ai-toggle-row input{margin:0}
+
+  .sem-consent{background:var(--code-bg); border-radius:8px; padding:.8rem .9rem; margin:.5rem .9rem}
+  .sem-consent p{margin:0 0 .6rem; font-size:.85rem; color:var(--text)}
+  .sem-consent-actions{display:flex; gap:.6rem; flex-wrap:wrap}
+  .sem-consent-actions button{
+    font:inherit; font-size:.82rem; padding:.4em .8em; border-radius:6px; cursor:pointer;
+  }
+  .sem-consent-actions button.primary{background:var(--accent); color:var(--surface); border:1px solid var(--accent)}
+  .sem-consent-actions button.secondary{background:none; color:var(--muted); border:1px solid var(--border)}
+  button.linklike{
+    font:inherit; font-size:.82rem; color:var(--accent); background:none; border:none;
+    padding:0; margin-left:.4em; text-decoration:underline; cursor:pointer;
+  }
+
   .detail{border:1px solid var(--border); border-radius:10px; background:var(--surface); padding:1.4rem 1.5rem; min-height:200px}
   .detail h2{font-size:1.25rem; margin:0 0 .2rem}
   .detail .d-code{color:var(--muted); font-size:.85rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -124,7 +141,10 @@
   <div class="search-box">
     <input type="search" id="q" placeholder="食品名で検索（例: じゃがいも、しょうゆ、りんご）" autocomplete="off">
     <p class="hint" id="hint">読み込み中…</p>
-    <p class="hint">キーワードに一致しない場合も、意味が近い食品をAI（<a href="https://huggingface.co/cl-nagoya/ruri-v3-30m" target="_blank" rel="noopener">cl-nagoya/ruri-v3-30m</a>、日本語特化の埋め込みモデル）が自動で提案します。初回検索時のみモデルの読み込みに数秒〜数十秒かかります。</p>
+    <p class="hint">キーワードに一致しない場合も、意味が近い食品をAI（<a href="https://huggingface.co/cl-nagoya/ruri-v3-30m" target="_blank" rel="noopener">cl-nagoya/ruri-v3-30m</a>、日本語特化の埋め込みモデル）が自動で提案します。初回検索時のみモデル（約40MB）を外部CDNからダウンロードします（要同意）。</p>
+    <p class="hint ai-toggle-row">
+      <label><input type="checkbox" id="aiToggle" checked> AI検索（意味が近い候補も探す）</label>
+    </p>
   </div>
 
   <div class="layout">
@@ -137,10 +157,18 @@
   </div>
 </main>
 
-<script type="module">
-import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/+esm';
-
+<script>
 (function(){
+  var TRANSFORMERS_CDN_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/+esm';
+  var pipelineFnPromise = null;
+  function loadPipelineFn(){
+    // 動的importにして、AI検索が有効化・同意されるまでは外部CDNに一切アクセスしない。
+    if (!pipelineFnPromise){
+      pipelineFnPromise = import(TRANSFORMERS_CDN_URL).then(function(mod){ return mod.pipeline; });
+    }
+    return pipelineFnPromise;
+  }
+
   var INDEX_URL = '/index.json';
   var META_URL = '/metadata.json';
   var DATA_URL = function(code){ return '/data/' + code + '.json'; };
@@ -157,19 +185,50 @@ import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers
   var SEM_SIM_FLOOR = 0.60;
   var SEM_TOP_N = 8;
 
-  var state = { index: null, meta: null, dataCache: {}, activeCode: null, semantic: null };
+  // AI検索のON/OFFはこの端末に保存する。ただし、実際にモデル（数十MB）を外部CDNから
+  // 読み込むかどうかは別途ユーザーの明示的な同意（modelConsentGiven）が必要で、
+  // トグルがONでも初回は必ず確認バナーを挟む。
+  var AI_ENABLED_KEY = 'foodSearch.aiSearchEnabled';
+  var AI_CONSENT_KEY = 'foodSearch.aiModelConsent';
+
+  function readLocalBool(key, defaultValue){
+    try {
+      var v = localStorage.getItem(key);
+      if (v === null) return defaultValue;
+      return v === 'true';
+    } catch (e) { return defaultValue; }
+  }
+  function writeLocalBool(key, value){
+    try { localStorage.setItem(key, value ? 'true' : 'false'); } catch (e) { /* ignore */ }
+  }
+
+  var state = {
+    index: null, meta: null, dataCache: {}, activeCode: null, semantic: null,
+    aiSearchEnabled: readLocalBool(AI_ENABLED_KEY, true),
+    modelConsentGiven: readLocalBool(AI_CONSENT_KEY, false),
+    consentDismissedThisSession: false
+  };
   var searchGeneration = 0;
 
   var qEl = document.getElementById('q');
   var hintEl = document.getElementById('hint');
   var resultsEl = document.getElementById('results');
   var detailEl = document.getElementById('detail');
+  var aiToggleEl = document.getElementById('aiToggle');
 
   function esc(s){
     return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
     });
   }
+
+  aiToggleEl.checked = state.aiSearchEnabled;
+  aiToggleEl.addEventListener('change', function(){
+    state.aiSearchEnabled = aiToggleEl.checked;
+    writeLocalBool(AI_ENABLED_KEY, state.aiSearchEnabled);
+    state.consentDismissedThisSession = false;
+    runSearch();
+  });
 
   Promise.all([
     fetch(INDEX_URL).then(function(r){ return r.json(); }),
@@ -255,11 +314,12 @@ import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers
       state.semanticReadyPromise = Promise.all([
         fetch(SEM_EMBEDDINGS_BASE + '.meta.json').then(function(r){ return r.json(); }),
         fetch(SEM_EMBEDDINGS_BASE + '.codes.json').then(function(r){ return r.json(); }),
-        fetch(SEM_EMBEDDINGS_BASE + '.f32').then(function(r){ return r.arrayBuffer(); })
+        fetch(SEM_EMBEDDINGS_BASE + '.f32').then(function(r){ return r.arrayBuffer(); }),
+        loadPipelineFn()
       ]).then(function(res){
-        var meta = res[0], codes = res[1], buf = res[2];
+        var meta = res[0], codes = res[1], buf = res[2], pipelineFn = res[3];
         state.semantic = { meta: meta, codes: codes, vectors: new Float32Array(buf), dim: meta.dim };
-        return pipeline('feature-extraction', meta.onnxRepo, { dtype: meta.dtype });
+        return pipelineFn('feature-extraction', meta.onnxRepo, { dtype: meta.dtype });
       }).then(function(extractor){
         state.semantic.extractor = extractor;
       });
@@ -267,14 +327,60 @@ import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers
     return state.semanticReadyPromise;
   }
 
+  function renderConsentBanner(semSection, q, excludeMatches, myGen){
+    semSection.innerHTML =
+      '<div class="sem-consent">' +
+      '<p>AI検索を使うには、外部CDN（Hugging Face / jsDelivr）から埋め込みモデル' +
+      '（約40MB、量子化ONNX。初回のみ・以降はブラウザにキャッシュされます）をダウンロードします。よろしいですか？</p>' +
+      '<div class="sem-consent-actions">' +
+      '<button type="button" class="primary" id="semConsentOk">ダウンロードして使う</button>' +
+      '<button type="button" class="secondary" id="semConsentNo">今回は使わない</button>' +
+      '</div></div>';
+
+    document.getElementById('semConsentOk').addEventListener('click', function(){
+      state.modelConsentGiven = true;
+      writeLocalBool(AI_CONSENT_KEY, true);
+      runSemanticSearch(q, excludeMatches, myGen);
+    });
+    document.getElementById('semConsentNo').addEventListener('click', function(){
+      state.consentDismissedThisSession = true;
+      renderConsentDeclinedNotice(semSection, q, excludeMatches, myGen);
+    });
+  }
+
+  function renderConsentDeclinedNotice(semSection, q, excludeMatches, myGen){
+    semSection.innerHTML =
+      '<div class="sem-status">AI検索はオフになっています。' +
+      '<button type="button" class="linklike" id="semConsentRetry">許可してAI検索を使う</button></div>';
+    document.getElementById('semConsentRetry').addEventListener('click', function(){
+      state.consentDismissedThisSession = false;
+      renderConsentBanner(semSection, q, excludeMatches, myGen);
+    });
+  }
+
   function runSemanticSearch(q, excludeMatches, myGen){
     var semSection = document.getElementById('semantic-section');
     if (!semSection) return;
+
+    if (!state.aiSearchEnabled){
+      semSection.innerHTML = '';
+      return;
+    }
 
     var excludeSet = {};
     excludeMatches.forEach(function(f){ excludeSet[f.code] = true; });
 
     var alreadyReady = !!(state.semantic && state.semantic.extractor);
+
+    if (!alreadyReady && !state.modelConsentGiven){
+      if (state.consentDismissedThisSession){
+        renderConsentDeclinedNotice(semSection, q, excludeMatches, myGen);
+        return;
+      }
+      renderConsentBanner(semSection, q, excludeMatches, myGen);
+      return;
+    }
+
     if (!alreadyReady){
       semSection.innerHTML = '<div class="sem-status">意味が近い候補を検索中…（初回のみモデルを読み込みます）</div>';
     }

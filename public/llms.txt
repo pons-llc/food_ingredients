@@ -31,7 +31,22 @@
 - [/index.json](/index.json): 全2541食品の `{code, index_no, group, group_name, name}` 一覧
 - [/data/{食品番号}.json](/data/01001.json): 1食品の成分データ（例として01001＝アマランサス 玄穀）
 - [/metadata.json](/metadata.json): 識別子辞書・食品群コード表・値注記の凡例・出典テーブル一覧
+- [/search.html](/search.html): キーワード検索とAI（埋め込みベクトル）による意味検索ができる人間向けの検索UI
+- /embeddings/ruri-v3-30m.{f32,codes.json,meta.json}: 意味検索用に事前計算した埋め込みベクトル（下記参照）
 - /llms.txt: このファイル
+
+## AI検索（意味検索）について
+
+`/search.html` はキーワードの完全一致・部分一致に加えて、埋め込みベクトルによる意味検索も行っている。
+例えば「パスタ」で検索すると、名称に「パスタ」を含まない「マカロニ・スパゲッティ」も候補に表示される。
+
+- モデル: [cl-nagoya/ruri-v3-30m](https://huggingface.co/cl-nagoya/ruri-v3-30m)（Apache-2.0、日本語特化、37Mパラメータ、dim=256）
+- 全2541食品の `name` を事前に埋め込んだベクトルを `/embeddings/ruri-v3-30m.f32`
+  （float32・行優先・shape `[2541, 256]`。行の並びは同ディレクトリの `ruri-v3-30m.codes.json` の食品番号列と対応）として公開している。
+  詳細なプレフィックス（索引側は「検索文書: 」、クエリ側は「検索クエリ: 」）・正規化方法は `ruri-v3-30m.meta.json` を参照
+- ブラウザ側では [sirasagi62/ruri-v3-30m-ONNX](https://huggingface.co/sirasagi62/ruri-v3-30m-ONNX)（tokenizer込みのONNXミラー、約40MB）を
+  Hugging Face Hub / jsDelivr経由で読み込む。ファイルサイズが大きいため、ユーザーの明示的な同意を得てから初めてダウンロードする
+  （同意しない限り外部CDNへは一切アクセスしない）
 
 ## 出典・注意事項
 
