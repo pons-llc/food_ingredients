@@ -72,6 +72,12 @@
 
   .empty, .placeholder{color:var(--muted); padding:1rem .9rem; font-size:.9rem}
 
+  .sem-status{color:var(--muted); padding:.7rem .9rem; font-size:.82rem}
+  .sem-status-label{display:flex; align-items:center; gap:.4em}
+  .sem-status-label .sem-hint{font-weight:400; color:var(--muted); font-size:.78rem}
+  .sem-badge{color:#6b7fb3; background:#e8ecf7}
+  @media (prefers-color-scheme: dark){ .sem-badge{color:#a9b8e8; background:#242a3d} }
+
   .detail{border:1px solid var(--border); border-radius:10px; background:var(--surface); padding:1.4rem 1.5rem; min-height:200px}
   .detail h2{font-size:1.25rem; margin:0 0 .2rem}
   .detail .d-code{color:var(--muted); font-size:.85rem; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -118,6 +124,7 @@
   <div class="search-box">
     <input type="search" id="q" placeholder="食品名で検索（例: じゃがいも、しょうゆ、りんご）" autocomplete="off">
     <p class="hint" id="hint">読み込み中…</p>
+    <p class="hint">キーワードに一致しない場合も、意味が近い食品をAI（<a href="https://huggingface.co/cl-nagoya/ruri-v3-30m" target="_blank" rel="noopener">cl-nagoya/ruri-v3-30m</a>、日本語特化の埋め込みモデル）が自動で提案します。初回検索時のみモデルの読み込みに数秒〜数十秒かかります。</p>
   </div>
 
   <div class="layout">
@@ -130,14 +137,25 @@
   </div>
 </main>
 
-<script>
+<script type="module">
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/+esm';
+
 (function(){
   var INDEX_URL = '/index.json';
   var META_URL = '/metadata.json';
   var DATA_URL = function(code){ return '/data/' + code + '.json'; };
   var MAX_RESULTS = 200;
 
-  var state = { index: null, meta: null, dataCache: {}, activeCode: null };
+  // 意味検索（ベクトル検索）: scripts/generate_embeddings.mjs で事前計算した静的ベクトルを
+  // 読み込み、同じモデル・同じ前処理でクエリを埋め込んで内積（コサイン類似度）で候補を探す。
+  // 0.82は実データで「無関係な語」の最高スコア(~0.80)と「関連する語」の最低スコア(~0.83)を
+  // 見た上での経験的なしきい値。埋め込みモデルやデータが変わったら見直すこと。
+  var SEM_EMBEDDINGS_BASE = '/embeddings/ruri-v3-30m';
+  var SEM_SIM_THRESHOLD = 0.82;
+  var SEM_TOP_N = 8;
+
+  var state = { index: null, meta: null, dataCache: {}, activeCode: null, semantic: null };
+  var searchGeneration = 0;
 
   var qEl = document.getElementById('q');
   var hintEl = document.getElementById('hint');
@@ -177,6 +195,9 @@
   function runSearch(){
     var q = qEl.value.trim();
     if (!state.index) return;
+    searchGeneration++;
+    var myGen = searchGeneration;
+
     if (!q){
       resultsEl.innerHTML = '<div class="placeholder">キーワードを入力すると候補が表示されます。</div>';
       return;
@@ -187,8 +208,25 @@
              (f.group_name && f.group_name.toLowerCase().indexOf(qLower) !== -1);
     });
 
+    resultsEl.innerHTML = '<div id="substring-section"></div><div id="semantic-section"></div>';
+    renderSubstringSection(matches, q);
+    runSemanticSearch(q, matches, myGen);
+  }
+
+  function bindResultButtons(container){
+    container.querySelectorAll('button[data-code]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selectFood(btn.getAttribute('data-code'), true);
+      });
+    });
+  }
+
+  function renderSubstringSection(matches, q){
+    var sec = document.getElementById('substring-section');
+    if (!sec) return;
+
     if (matches.length === 0){
-      resultsEl.innerHTML = '<div class="empty">「' + esc(q) + '」に一致する食品が見つかりませんでした。</div>';
+      sec.innerHTML = '<div class="empty">「' + esc(q) + '」に一致する食品が見つかりませんでした。</div>';
       return;
     }
 
@@ -205,12 +243,90 @@
         '</button></li>';
     });
     html += '</ul>';
-    resultsEl.innerHTML = html;
+    sec.innerHTML = html;
+    bindResultButtons(sec);
+  }
 
-    resultsEl.querySelectorAll('button[data-code]').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        selectFood(btn.getAttribute('data-code'), true);
+  function ensureSemanticReady(){
+    if (!state.semanticReadyPromise){
+      state.semanticReadyPromise = Promise.all([
+        fetch(SEM_EMBEDDINGS_BASE + '.meta.json').then(function(r){ return r.json(); }),
+        fetch(SEM_EMBEDDINGS_BASE + '.codes.json').then(function(r){ return r.json(); }),
+        fetch(SEM_EMBEDDINGS_BASE + '.f32').then(function(r){ return r.arrayBuffer(); })
+      ]).then(function(res){
+        var meta = res[0], codes = res[1], buf = res[2];
+        state.semantic = { meta: meta, codes: codes, vectors: new Float32Array(buf), dim: meta.dim };
+        return pipeline('feature-extraction', meta.onnxRepo, { dtype: meta.dtype });
+      }).then(function(extractor){
+        state.semantic.extractor = extractor;
       });
+    }
+    return state.semanticReadyPromise;
+  }
+
+  function runSemanticSearch(q, excludeMatches, myGen){
+    var semSection = document.getElementById('semantic-section');
+    if (!semSection) return;
+
+    var excludeSet = {};
+    excludeMatches.forEach(function(f){ excludeSet[f.code] = true; });
+
+    var alreadyReady = !!(state.semantic && state.semantic.extractor);
+    if (!alreadyReady){
+      semSection.innerHTML = '<div class="sem-status">意味が近い候補を検索中…（初回のみモデルを読み込みます）</div>';
+    }
+
+    ensureSemanticReady().then(function(){
+      if (myGen !== searchGeneration) return;
+      var meta = state.semantic.meta;
+      var queryPrefix = (meta.prefixes && meta.prefixes.query) || '';
+      return state.semantic.extractor(queryPrefix + q, { pooling: 'mean', normalize: true }).then(function(output){
+        if (myGen !== searchGeneration) return;
+
+        var qv = output.tolist()[0];
+        var dim = state.semantic.dim;
+        var vecs = state.semantic.vectors;
+        var codes = state.semantic.codes;
+        var byCode = {};
+        state.index.forEach(function(f){ byCode[f.code] = f; });
+
+        var scored = [];
+        for (var i = 0; i < codes.length; i++){
+          var code = codes[i];
+          if (excludeSet[code]) continue;
+          var off = i * dim;
+          var s = 0;
+          for (var d = 0; d < dim; d++) s += qv[d] * vecs[off + d];
+          if (s >= SEM_SIM_THRESHOLD) scored.push({ code: code, score: s });
+        }
+        scored.sort(function(a, b){ return b.score - a.score; });
+        var top = scored.slice(0, SEM_TOP_N);
+
+        if (top.length === 0){
+          semSection.innerHTML = '';
+          return;
+        }
+
+        var html = '<div class="results-status sem-status-label">意味が近い候補' +
+          '<span class="sem-hint">（AI検索）</span></div><ul class="result-list">';
+        top.forEach(function(s){
+          var f = byCode[s.code];
+          if (!f) return;
+          html += '<li><button type="button" data-code="' + esc(f.code) + '"' +
+            (f.code === state.activeCode ? ' class="active"' : '') + '>' +
+            '<span class="r-name">' + esc(f.name) + '</span>' +
+            '<span class="r-meta"><span class="r-badge sem-badge">類似 ' + Math.round(s.score * 100) + '%</span>' +
+            '<span class="r-badge">' + esc(f.group_name) + '</span>' +
+            '<span class="r-code">' + esc(f.code) + '</span></span>' +
+            '</button></li>';
+        });
+        html += '</ul>';
+        semSection.innerHTML = html;
+        bindResultButtons(semSection);
+      });
+    }).catch(function(err){
+      console.warn('semantic search unavailable:', err);
+      if (myGen === searchGeneration) semSection.innerHTML = '';
     });
   }
 

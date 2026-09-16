@@ -9,12 +9,16 @@ Cloudflare Pagesで配信する静的JSON API（`public/`）にビルドする�
 
 ```
 data/                元データ（文科省配布のExcel、11ファイル）
-scripts/build_dataset.py   data/ を public/ にビルドするスクリプト
-public/               Cloudflare Pagesで配信する静的ファイル一式（ビルド生成物）
+scripts/build_dataset.py       data/ を public/ にビルドするスクリプト
+scripts/generate_embeddings.mjs  public/index.json から意味検索用の埋め込みベクトルを生成するスクリプト
+public/               Cloudflare Pagesで配信する静的ファイル一式（ビルド生成物 + 検索UI）
   index.json          全食品の {code, index_no, group, group_name, name} 一覧
   data/{食品番号}.json  1食品ごとの成分データ
   metadata.json        識別子辞書・食品群コード表・値注記の凡例
   llms.txt             LLM/エージェント向けの使い方ガイド
+  embeddings/          意味検索（ベクトル検索）用の事前計算済みベクトル（ビルド生成物）
+  search.html           キーワード検索＋意味検索のUI（手書き、ビルド対象外）
+  index.html            ドキュメントページ（手書き、ビルド対象外）
   _headers             Cloudflare Pages用のCORS/Content-Type設定
 ```
 
@@ -26,6 +30,25 @@ python3 scripts/build_dataset.py
 
 `openpyxl` が必要（`pip install openpyxl`）。実行するたびに `public/index.json` /
 `public/data/*.json` / `public/metadata.json` / `public/llms.txt` を作り直す（冪等）。
+
+## 意味検索（ベクトル検索）用ベクトルの生成
+
+`public/search.html` のキーワード検索は、完全一致・部分一致しない語（例:「パスタ」で「マカロニ・スパゲッティ」、
+「ワイン」で「ぶどう酒」）も拾えるよう、埋め込みベクトルによる意味検索を併用している。
+
+```sh
+npm install
+npm run generate-embeddings
+```
+
+- モデル: [cl-nagoya/ruri-v3-30m](https://huggingface.co/cl-nagoya/ruri-v3-30m)（Apache-2.0、日本語特化、37Mパラメータ、dim=256）。
+  小型ながらJMTEB平均で `intfloat/multilingual-e5-small`（118Mパラメータ）を上回る、日本語の意味検索に強いオープンソースモデル。
+- ブラウザ側では [sirasagi62/ruri-v3-30m-ONNX](https://huggingface.co/sirasagi62/ruri-v3-30m-ONNX)（tokenizer一式込みのONNXミラー、
+  q8量子化で約37MB）を [@huggingface/transformers](https://www.npmjs.com/package/@huggingface/transformers)（transformers.js）経由でHugging Face Hub /
+  jsDelivrから読み込み、同じ前処理でクエリを埋め込んで比較する。モデル本体はサイズがCloudflare Pagesの1ファイル25MiB上限を超えるため
+  リポジトリには含めず、初回検索時にブラウザがCDNから取得・キャッシュする。
+- `npm run generate-embeddings` が書き出すのは `public/embeddings/ruri-v3-30m.{f32,codes.json,meta.json}` の3ファイルのみ
+  （2541件 × 256次元 × float32 ≈ 2.5MB）。`public/index.json` の `name` を更新したら再実行して埋め込みも更新すること。
 
 ## データモデル
 

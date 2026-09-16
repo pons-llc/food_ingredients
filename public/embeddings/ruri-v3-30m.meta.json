@@ -1,0 +1,19 @@
+{
+  "model": "cl-nagoya/ruri-v3-30m",
+  "onnxRepo": "sirasagi62/ruri-v3-30m-ONNX",
+  "dtype": "q8",
+  "dim": 256,
+  "count": 2541,
+  "pooling": "mean",
+  "normalized": true,
+  "similarity": "dot",
+  "prefixes": {
+    "passage": "検索文書: ",
+    "query": "検索クエリ: "
+  },
+  "sourceField": "name",
+  "format": "float32 little-endian, row-major, shape [count, dim]. 行の並びは同ディレクトリの {basename}.codes.json と対応する。",
+  "transformersJsVersion": "4.3.0",
+  "generatedAt": "2026-09-16T05:23:25.511Z",
+  "generatorScript": "scripts/generate_embeddings.mjs"
+}

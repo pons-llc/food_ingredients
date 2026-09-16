@@ -1,0 +1,12 @@
+{
+  "name": "food-ingredients-tools",
+  "private": true,
+  "type": "module",
+  "description": "public/ の静的サイト向けビルドツール群（埋め込みベクトル生成など）",
+  "scripts": {
+    "generate-embeddings": "node scripts/generate_embeddings.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.0"
+  }
+}
